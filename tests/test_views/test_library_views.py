@@ -19,7 +19,7 @@ client = TestClient(app)
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_author_view(asyncclient_get_mocker, response_data):
@@ -29,7 +29,7 @@ def test_list_author_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_author_view_with_requested_fields(
@@ -43,7 +43,7 @@ def test_list_author_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_author_view_with_params(
@@ -55,7 +55,7 @@ def test_list_author_view_with_params(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_detail_author_view(asyncclient_get_mocker, response_data):
@@ -65,7 +65,7 @@ def test_detail_author_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_detail_author_view_with_requested_fields(
@@ -79,7 +79,7 @@ def test_detail_author_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_create_author_view(
@@ -91,7 +91,7 @@ def test_create_author_view(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_create_author_view_with_requested_fields(
@@ -108,7 +108,7 @@ def test_create_author_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_update_author_view(
@@ -120,7 +120,7 @@ def test_update_author_view(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_update_author_view_with_requested_fields(
@@ -138,7 +138,7 @@ def test_update_author_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_delete_author_view(asyncclient_get_mocker, response_data):
@@ -148,7 +148,7 @@ def test_delete_author_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_delete_author_view_with_requested_fields(
@@ -162,7 +162,7 @@ def test_delete_author_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_book_view(asyncclient_get_mocker, response_data):
@@ -172,7 +172,7 @@ def test_list_book_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_book_view_with_requested_fields(
@@ -184,7 +184,7 @@ def test_list_book_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_book_view_with_params(asyncclient_get_mocker, response_data, book_params):
@@ -194,7 +194,7 @@ def test_list_book_view_with_params(asyncclient_get_mocker, response_data, book_
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_detail_book_view(asyncclient_get_mocker, response_data):
@@ -204,7 +204,7 @@ def test_detail_book_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_detail_book_view_with_requested_fields(
@@ -218,7 +218,7 @@ def test_detail_book_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_create_book_view(asyncclient_get_mocker, response_data, body_data_create_book):
@@ -228,7 +228,7 @@ def test_create_book_view(asyncclient_get_mocker, response_data, body_data_creat
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_create_book_view_with_requested_fields(
@@ -242,7 +242,7 @@ def test_create_book_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_update_book_view(asyncclient_get_mocker, response_data, body_data_update_book):
@@ -252,7 +252,7 @@ def test_update_book_view(asyncclient_get_mocker, response_data, body_data_updat
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_update_book_view_with_requested_fields(
@@ -266,7 +266,7 @@ def test_update_book_view_with_requested_fields(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_delete_book_view(asyncclient_get_mocker, response_data):
@@ -276,7 +276,7 @@ def test_delete_book_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_delete_book_view_with_requested_fields(

@@ -1,4 +1,4 @@
-from src.dependencies.graphql.request_body_builders import (
+from utils.graphql.request_body_builders import (
     BookMutationRequestBody,
     BookQueryRequestBody,
 )

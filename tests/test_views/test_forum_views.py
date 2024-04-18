@@ -19,7 +19,7 @@ client = TestClient(app)
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_topic_view(asyncclient_get_mocker, response_data):
@@ -29,7 +29,7 @@ def test_list_topic_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_list_topic_view_with_params(
@@ -41,7 +41,7 @@ def test_list_topic_view_with_params(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_detail_topic_view(asyncclient_get_mocker, response_data):
@@ -51,7 +51,7 @@ def test_detail_topic_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_create_topic_view(
@@ -66,7 +66,7 @@ def test_create_topic_view(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.patch",
+    "src.utils.gateway_routers.httpx.AsyncClient.patch",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_update_topic_view(
@@ -78,7 +78,7 @@ def test_update_topic_view(
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.delete",
+    "src.utils.gateway_routers.httpx.AsyncClient.delete",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_delete_topic_view(asyncclient_get_mocker, response_data):
@@ -88,7 +88,7 @@ def test_delete_topic_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_detail_post_view(asyncclient_get_mocker, response_data):
@@ -98,7 +98,7 @@ def test_detail_post_view(asyncclient_get_mocker, response_data):
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_create_post_view(asyncclient_get_mocker, response_data, body_data_create_post):
@@ -111,7 +111,7 @@ def test_create_post_view(asyncclient_get_mocker, response_data, body_data_creat
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.patch",
+    "src.utils.gateway_routers.httpx.AsyncClient.patch",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_update_post_view(asyncclient_get_mocker, response_data, body_data_update_post):
@@ -121,7 +121,7 @@ def test_update_post_view(asyncclient_get_mocker, response_data, body_data_updat
 
 
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.delete",
+    "src.utils.gateway_routers.httpx.AsyncClient.delete",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 def test_delete_post_view(asyncclient_get_mocker, response_data):

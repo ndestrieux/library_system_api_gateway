@@ -3,12 +3,12 @@ from unittest.mock import patch
 import httpx
 import pytest
 
-from src.dependencies.gateway_routers import ForumRouter
+from utils.gateway_routers import ForumRouter
 
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 async def test_forum_topic_router_with_get_method(
@@ -21,7 +21,7 @@ async def test_forum_topic_router_with_get_method(
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 async def test_forum_topic_router_with_get_method_with_query_params(
@@ -34,7 +34,7 @@ async def test_forum_topic_router_with_get_method_with_query_params(
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 async def test_forum_topic_router_with_post_method(
@@ -47,7 +47,7 @@ async def test_forum_topic_router_with_post_method(
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.patch",
+    "src.utils.gateway_routers.httpx.AsyncClient.patch",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 async def test_forum_topic_router_with_patch_method(
@@ -62,7 +62,7 @@ async def test_forum_topic_router_with_patch_method(
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.delete",
+    "src.utils.gateway_routers.httpx.AsyncClient.delete",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 async def test_forum_topic_router_with_patch_method(

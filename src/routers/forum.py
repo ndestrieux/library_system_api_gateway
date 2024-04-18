@@ -9,9 +9,9 @@ from datastructures.forum import (
     TopicQueryParams,
     TopicUpdateForm,
 )
-from dependencies.gateway_routers import ForumRouter
-from dependencies.utils import get_user_id_from_token
 from params import auth_all
+from utils.gateway_routers import ForumRouter
+from utils.general import get_user_id_from_token
 
 router = APIRouter(prefix="/api/forum", tags=["forum"])
 

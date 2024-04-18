@@ -12,15 +12,15 @@ from datastructures.library import (
     BookUpdateForm,
     LibraryBaseModel,
 )
-from dependencies.gateway_routers import LibraryRouter
-from dependencies.graphql.request_body_builders import (
+from params import auth_all, auth_staff
+from utils.gateway_routers import LibraryRouter
+from utils.general import get_user_id_from_token
+from utils.graphql.request_body_builders import (
     AuthorMutationRequestBody,
     AuthorQueryRequestBody,
     BookMutationRequestBody,
     BookQueryRequestBody,
 )
-from dependencies.utils import get_user_id_from_token
-from params import auth_all, auth_staff
 
 router = APIRouter(prefix="/api/library", tags=["library"])
 
