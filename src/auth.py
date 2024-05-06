@@ -1,9 +1,10 @@
-from typing import Optional
+from typing import List, Optional
 
 import jwt
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, SecurityScopes
 
+import conf
 from conf import get_settings
 from exceptions import UnauthenticatedException, UnauthorizedException
 
@@ -11,10 +12,13 @@ from exceptions import UnauthenticatedException, UnauthorizedException
 class VerifyToken:
     """Does all the token verification using PyJWT"""
 
-    def __init__(self):
+    def __init__(self, authorized_user_roles: Optional[List] = None):
         self.config = get_settings()
         jwks_url = f"https://{self.config.auth0_domain}/.well-known/jwks.json"
         self.jwks_client = jwt.PyJWKClient(jwks_url)
+        self.authorized_user_roles = (
+            authorized_user_roles if authorized_user_roles else list(conf.UserType)
+        )
 
     async def verify(
         self,
@@ -41,4 +45,11 @@ class VerifyToken:
             )
         except Exception as error:
             raise UnauthorizedException(str(error))
+        if not (
+            set(payload[f"{self.config.auth0_api_audience}roles"])
+            & set(self.authorized_user_roles)
+        ):
+            raise UnauthorizedException(
+                "You do not have enough rights to access this resource."
+            )
         return payload
