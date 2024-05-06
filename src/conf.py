@@ -1,6 +1,17 @@
+from enum import Enum
 from functools import lru_cache
 
 from pydantic_settings import BaseSettings
+
+
+class UserType(str, Enum):
+    MODERATOR = "moderator"
+    EMPLOYEE = "employee"
+    STANDARD = "standard"
+
+    @classmethod
+    def staff_users(cls):
+        return [t.value for t in list(cls)[:2]]
 
 
 class Settings(BaseSettings):
