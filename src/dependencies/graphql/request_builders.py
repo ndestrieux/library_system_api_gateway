@@ -32,6 +32,7 @@ class GraphQLBaseRequest(ABC):
 
     def __init__(
         self,
+        *,
         operation_args: Optional[Dict[str, str | int]] = None,
         required_fields: Optional[List[str | Dict]] = None,
     ):
@@ -86,10 +87,11 @@ class GraphQLMutationRequest(GraphQLBaseRequest, ABC):
     def __init__(
         self,
         mutation_operation_name: str,
+        *,
         operation_args: Dict[str, str | int],
         required_fields: List[str | Dict] | None = None,
     ):
-        super().__init__(operation_args, required_fields)
+        super().__init__(operation_args=operation_args, required_fields=required_fields)
         self.mutation_operation_name = mutation_operation_name
 
     def __str__(self):
