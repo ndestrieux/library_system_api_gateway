@@ -17,6 +17,7 @@ uvicorn = {extras = ["standard"], version = "~0.29"}
 black = "*"
 isort = "*"
 pre-commit = "~3.7"
+pytest = "~8.2"
 
 [build-system]
 requires = ["poetry-core"]
