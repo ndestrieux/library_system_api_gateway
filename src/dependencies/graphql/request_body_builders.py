@@ -2,14 +2,14 @@ from abc import ABC
 from typing import Dict, List, Optional
 
 
-class GraphQLAuthorParamsMixin:
+class AuthorParamsMixin:
     """Basic data for building GraphQL requests for author endpoints"""
 
     OBJ_NAME = "author"
     DEFAULT_REQUIRED_FIELD = ["id", "first_name", "middle_name", "last_name"]
 
 
-class GraphQLBookParamsMixin:
+class BookParamsMixin:
     """Basic data for building GraphQL requests for book endpoints"""
 
     OBJ_NAME = "book"
@@ -23,7 +23,7 @@ class GraphQLBookParamsMixin:
     ]
 
 
-class GraphQLBaseRequest(ABC):
+class BaseRequestBody(ABC):
     """Abstract class for building GraphQL requests"""
 
     REQUEST_TYPE: str = None
@@ -70,7 +70,7 @@ class GraphQLBaseRequest(ABC):
         )
 
 
-class GraphQLQueryRequest(GraphQLBaseRequest, ABC):
+class QueryRequestBody(BaseRequestBody, ABC):
     """Abstract class for building GraphQL requests for query types."""
 
     REQUEST_TYPE = "query"
@@ -79,7 +79,7 @@ class GraphQLQueryRequest(GraphQLBaseRequest, ABC):
         return f"{self.REQUEST_TYPE} {self._build_request()}"
 
 
-class GraphQLMutationRequest(GraphQLBaseRequest, ABC):
+class MutationRequestBody(BaseRequestBody, ABC):
     """Abstract class for building GraphQL requests for mutation types."""
 
     REQUEST_TYPE = "mutation"
@@ -98,17 +98,17 @@ class GraphQLMutationRequest(GraphQLBaseRequest, ABC):
         return f"{self.REQUEST_TYPE} {self.mutation_operation_name} {self._build_request()}"
 
 
-class GraphQLAuthorQueryRequest(GraphQLAuthorParamsMixin, GraphQLQueryRequest):
+class AuthorQueryRequestBody(AuthorParamsMixin, QueryRequestBody):
     """Class for GraphQL query-type author items."""
 
 
-class GraphQLAuthorMutationRequest(GraphQLAuthorParamsMixin, GraphQLMutationRequest):
+class AuthorMutationRequestBody(AuthorParamsMixin, MutationRequestBody):
     """Class for GraphQL mutation-type author items."""
 
 
-class GraphQLBookQueryRequest(GraphQLBookParamsMixin, GraphQLQueryRequest):
+class BookQueryRequestBody(BookParamsMixin, QueryRequestBody):
     """Class for GraphQL query-type book items."""
 
 
-class GraphQLBookMutationRequest(GraphQLBookParamsMixin, GraphQLMutationRequest):
+class BookMutationRequestBody(BookParamsMixin, MutationRequestBody):
     """Class for GraphQL mutation-type book items."""

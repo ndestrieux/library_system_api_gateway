@@ -1,16 +1,16 @@
-from src.dependencies.graphql.request_builders import (
-    GraphQLAuthorMutationRequest,
-    GraphQLAuthorQueryRequest,
+from src.dependencies.graphql.request_body_builders import (
+    AuthorMutationRequestBody,
+    AuthorQueryRequestBody,
 )
 
 
 def test_author_query_request_builder_when_required_fields_and_operation_args_are_not_present():
-    request = GraphQLAuthorQueryRequest()
+    request = AuthorQueryRequestBody()
     assert str(request) == "query {author {id first_name middle_name last_name}}"
 
 
 def test_author_query_request_builder_when_required_fields_are_not_present():
-    request = GraphQLAuthorQueryRequest(operation_args={"id": 5})
+    request = AuthorQueryRequestBody(operation_args={"id": 5})
     assert (
         str(request)
         == """query {author(id: "5") {id first_name middle_name last_name}}"""
@@ -18,12 +18,12 @@ def test_author_query_request_builder_when_required_fields_are_not_present():
 
 
 def test_author_query_request_builder_when_operation_args_are_not_present():
-    request = GraphQLAuthorQueryRequest(required_fields=["first_name", "last_name"])
+    request = AuthorQueryRequestBody(required_fields=["first_name", "last_name"])
     assert str(request) == "query {author {first_name last_name}}"
 
 
 def test_author_query_request_builder_when_all_args_are_present():
-    request = GraphQLAuthorQueryRequest(
+    request = AuthorQueryRequestBody(
         required_fields=["first_name", "last_name"],
         operation_args={"last_name": "Cooper"},
     )
@@ -35,7 +35,7 @@ def test_author_query_request_builder_when_all_args_are_present():
 def test_author_mutation_request_builder_when_required_fields_are_not_present(
     author_data,
 ):
-    request = GraphQLAuthorMutationRequest("createAuthor", operation_args=author_data)
+    request = AuthorMutationRequestBody("createAuthor", operation_args=author_data)
     assert (
         str(request)
         == """mutation createAuthor {author(first_name: "Dale", last_name: "Cooper") """
@@ -44,7 +44,7 @@ def test_author_mutation_request_builder_when_required_fields_are_not_present(
 
 
 def test_author_mutation_request_builder_when_all_args_are_present(author_data):
-    request = GraphQLAuthorMutationRequest(
+    request = AuthorMutationRequestBody(
         "createAuthor",
         operation_args=author_data,
         required_fields=["first_name", "last_name"],
