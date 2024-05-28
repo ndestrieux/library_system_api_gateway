@@ -1,7 +1,7 @@
 from enum import Enum
 from functools import lru_cache
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class UserType(str, Enum):
@@ -15,13 +15,15 @@ class UserType(str, Enum):
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file="../.env")
+
     auth0_domain: str
     auth0_api_audience: str
     auth0_issuer: str
     auth0_algorithms: str
 
-    class Config:
-        env_file = "../.env"
+    library_endpoint: str
+    forum_endpoint: str
 
 
 @lru_cache()
