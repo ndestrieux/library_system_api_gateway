@@ -4,12 +4,12 @@ from src.dependencies.graphql.request_body_builders import (
 )
 
 
-def test_author_query_request_builder_when_required_fields_and_operation_args_are_not_present():
+def test_author_query_request_builder_when_requested_fields_and_operation_args_are_not_present():
     request = AuthorQueryRequestBody()
     assert str(request) == "query {author {id first_name middle_name last_name}}"
 
 
-def test_author_query_request_builder_when_required_fields_are_not_present():
+def test_author_query_request_builder_when_requested_fields_are_not_present():
     request = AuthorQueryRequestBody(operation_args={"id": 5})
     assert (
         str(request)
@@ -18,13 +18,13 @@ def test_author_query_request_builder_when_required_fields_are_not_present():
 
 
 def test_author_query_request_builder_when_operation_args_are_not_present():
-    request = AuthorQueryRequestBody(required_fields=["first_name", "last_name"])
+    request = AuthorQueryRequestBody(requested_fields=["first_name", "last_name"])
     assert str(request) == "query {author {first_name last_name}}"
 
 
 def test_author_query_request_builder_when_all_args_are_present():
     request = AuthorQueryRequestBody(
-        required_fields=["first_name", "last_name"],
+        requested_fields=["first_name", "last_name"],
         operation_args={"last_name": "Cooper"},
     )
     assert (
@@ -32,7 +32,7 @@ def test_author_query_request_builder_when_all_args_are_present():
     )
 
 
-def test_author_mutation_request_builder_when_required_fields_are_not_present(
+def test_author_mutation_request_builder_when_requested_fields_are_not_present(
     author_data,
 ):
     request = AuthorMutationRequestBody("createAuthor", operation_args=author_data)
@@ -47,7 +47,7 @@ def test_author_mutation_request_builder_when_all_args_are_present(author_data):
     request = AuthorMutationRequestBody(
         "createAuthor",
         operation_args=author_data,
-        required_fields=["first_name", "last_name"],
+        requested_fields=["first_name", "last_name"],
     )
     assert (
         str(request)

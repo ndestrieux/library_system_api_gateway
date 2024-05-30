@@ -21,7 +21,7 @@ class BookQueryParams(BaseModel):
 class LibraryBaseModel(BaseModel):
     """Required fields can be passed in every request."""
 
-    required_fields: Optional[List[str]] = None
+    requested_fields: Optional[List[str]] = None
 
 
 class AuthorCreateForm(LibraryBaseModel):

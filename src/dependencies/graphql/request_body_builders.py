@@ -6,14 +6,14 @@ class AuthorParamsMixin:
     """Basic data for building GraphQL requests for author endpoints"""
 
     OBJ_NAME = "author"
-    DEFAULT_REQUIRED_FIELD = ["id", "first_name", "middle_name", "last_name"]
+    DEFAULT_REQUESTED_FIELD = ["id", "first_name", "middle_name", "last_name"]
 
 
 class BookParamsMixin:
     """Basic data for building GraphQL requests for book endpoints"""
 
     OBJ_NAME = "book"
-    DEFAULT_REQUIRED_FIELD = [
+    DEFAULT_REQUESTED_FIELD = [
         "id",
         "title",
         {"authors": ["first_name", "middle_name", "last_name"]},
@@ -28,16 +28,16 @@ class BaseRequestBody(ABC):
 
     REQUEST_TYPE: str = None
     OBJ_NAME: str = None
-    DEFAULT_REQUIRED_FIELD: List[str | Dict] = []
+    DEFAULT_REQUESTED_FIELD: List[str | Dict] = []
 
     def __init__(
         self,
         *,
         operation_args: Optional[Dict[str, str | int]] = None,
-        required_fields: Optional[List[str | Dict]] = None,
+        requested_fields: Optional[List[str | Dict]] = None,
     ):
-        self.required_fields = (
-            required_fields if required_fields else self.DEFAULT_REQUIRED_FIELD
+        self.requested_fields = (
+            requested_fields if requested_fields else self.DEFAULT_REQUESTED_FIELD
         )
         self.operation_args = operation_args
 
@@ -47,26 +47,28 @@ class BaseRequestBody(ABC):
         args_list = [f'{k}: "{v}"' for k, v in operation_args.items()]
         return f"({", ".join(args_list)})"
 
-    def _required_fields2graphql(
+    def _requested_fields2graphql(
         self,
         fields: Dict[str, str | Dict],
         operation_args: Optional[Dict[str, str | int]] = None,
     ):
-        """Builds the whole string chain of required fields for GraphQL."""
+        """Builds the whole string chain of requested fields for GraphQL."""
         item = list(fields.keys())[0]
         op_args = self._build_operation_args(operation_args) if operation_args else ""
         result = f"{{{item}{op_args} {{"
         for c, f in enumerate(list(fields.values())[0]):
             if c > 0:
                 result += " "
-            result += f"{f}" if isinstance(f, str) else self._required_fields2graphql(f)
+            result += (
+                f"{f}" if isinstance(f, str) else self._requested_fields2graphql(f)
+            )
         result += "}}"
         return result
 
     def _build_request(self):
         """Builds GraphQL request for string representation."""
-        return self._required_fields2graphql(
-            {self.OBJ_NAME: self.required_fields}, self.operation_args
+        return self._requested_fields2graphql(
+            {self.OBJ_NAME: self.requested_fields}, self.operation_args
         )
 
 
@@ -89,9 +91,11 @@ class MutationRequestBody(BaseRequestBody, ABC):
         mutation_operation_name: str,
         *,
         operation_args: Dict[str, str | int],
-        required_fields: List[str | Dict] | None = None,
+        requested_fields: List[str | Dict] | None = None,
     ):
-        super().__init__(operation_args=operation_args, required_fields=required_fields)
+        super().__init__(
+            operation_args=operation_args, requested_fields=requested_fields
+        )
         self.mutation_operation_name = mutation_operation_name
 
     def __str__(self):

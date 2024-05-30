@@ -4,7 +4,7 @@ from src.dependencies.graphql.request_body_builders import (
 )
 
 
-def test_book_query_request_builder_when_required_fields_and_operation_args_are_not_present():
+def test_book_query_request_builder_when_requested_fields_and_operation_args_are_not_present():
     request = BookQueryRequestBody()
     assert (
         str(request)
@@ -13,7 +13,7 @@ def test_book_query_request_builder_when_required_fields_and_operation_args_are_
     )
 
 
-def test_book_query_request_builder_when_required_fields_are_not_present():
+def test_book_query_request_builder_when_requested_fields_are_not_present():
     request = BookQueryRequestBody(operation_args={"id": 5})
     assert (
         str(request)
@@ -23,19 +23,19 @@ def test_book_query_request_builder_when_required_fields_are_not_present():
 
 
 def test_author_query_request_builder_when_operation_args_are_not_present():
-    request = BookQueryRequestBody(required_fields=["title", "publication_year"])
+    request = BookQueryRequestBody(requested_fields=["title", "publication_year"])
     assert str(request) == "query {book {title publication_year}}"
 
 
 def test_author_query_request_builder_when_all_args_are_present():
     request = BookQueryRequestBody(
-        required_fields=["title", "publication_year"],
+        requested_fields=["title", "publication_year"],
         operation_args={"title": "Dracula"},
     )
     assert str(request) == """query {book(title: "Dracula") {title publication_year}}"""
 
 
-def test_book_mutation_request_builder_when_required_fields_are_not_present(
+def test_book_mutation_request_builder_when_requested_fields_are_not_present(
     book_data,
 ):
     request = BookMutationRequestBody("createBook", operation_args=book_data)
@@ -50,7 +50,7 @@ def test_book_mutation_request_builder_when_all_args_are_present(book_data):
     request = BookMutationRequestBody(
         "createBook",
         operation_args=book_data,
-        required_fields=["title", "publication_year"],
+        requested_fields=["title", "publication_year"],
     )
     assert (
         str(request)
