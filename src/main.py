@@ -1,11 +1,8 @@
-from fastapi import FastAPI, Security
+from fastapi import FastAPI
 
-from auth import VerifyToken
+from routers import library
 
 app = FastAPI()
-auth = VerifyToken()
 
-
-@app.get("/api/private")
-def private(auth_result: str = Security(auth.verify)):
-    return auth_result
+app.include_router(library.router)
+# app.include_router(forum.router)
