@@ -75,3 +75,40 @@ def body_data_create_book():
 @pytest.fixture(scope="function")
 def body_data_update_book():
     return {"category": "Epic"}
+
+
+@pytest.fixture(scope="function")
+def body_data_create_topic():
+    return {
+        "title": "Star Wars book recommendation",
+        "category": "Recommendation",
+    }
+
+
+@pytest.fixture(scope="function")
+def body_data_update_topic():
+    return {
+        "category": "Science Fiction",
+    }
+
+
+@pytest.fixture(scope="function")
+def topic_params():
+    """Generate topic params."""
+    return {"category": "XIXth century"}
+
+
+@pytest.fixture(scope="function")
+def body_data_create_post():
+    return {
+        "content": "I have a question...",
+        "topic": 1,
+    }
+
+
+@pytest.fixture(scope="function")
+def body_data_update_post():
+    return {
+        "content": "I was wondering...",
+        "topic": 1,
+    }

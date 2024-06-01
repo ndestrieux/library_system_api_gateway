@@ -63,15 +63,16 @@ class RESTRouter(BaseRouter, ABC):
         path: str,
         request_method: str,
         user_id: str,
-        rest_data: Optional[Dict[str, str | int]] = None,
+        *,
+        body: Optional[Dict[str, str | int]] = None,
         query_params: Optional[Dict[str, str]] = None,
     ):
         super().__init__(path, request_method, user_id)
-        self.rest_data = rest_data
+        self.body = body
         self.query_params = query_params
 
     def _get_body(self):
-        return self.rest_data or ""
+        return self.body or ""
 
     def _build_request(self):
         req_dict = super()._build_request()
