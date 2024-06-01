@@ -15,7 +15,7 @@ class UserType(str, Enum):
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file="../.env")
+    model_config = SettingsConfigDict(env_file=".env")
 
     auth0_domain: str
     auth0_api_audience: str
