@@ -16,18 +16,20 @@ repos:
         require_serial: true
         args: ['--in-place', '--remove-all-unused-imports']
 
--   repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+-   repo: local
     hooks:
     -   id: isort
+        name: isort
+        entry: isort
+        language: python
+        types: [ file, python ]
+        args: ["--profile", "black", "--filter-files"]
 
--   repo: https://github.com/psf/black
-    rev: 22.3.0
+-   repo: local
     hooks:
     -   id: black
-        language_version: python3.11
-
-# -   repo: https://github.com/pre-commit/mirrors-mypy
-#     rev: v1.3.0
-#     hooks:
-#     -   id: mypy
+        name: black
+        entry: black
+        language: python
+        types: [ file, python ]
+        language_version: python3.12
