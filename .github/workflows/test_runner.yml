@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.12
 
@@ -25,6 +25,20 @@ jobs:
       - name: Install Dependencies
         run: |
           poetry install --with dev
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          envkey_AUTH0_API_AUDIENCE: ${{ secrets.AUTH0_API_AUDIENCE }}
+          envkey_AUTH0_ISSUER: ${{ secrets.AUTH0_ISSUER }}
+          envkey_AUTH0_ALGORITHMS: ${{ secrets.AUTH0_ALGORITHMS }}
+          envkey_LIBRARY_ENDPOINT: ${{ secrets.LIBRARY_ENDPOINT }}
+          envkey_FORUM_ENDPOINT: ${{ secrets.FORUM_ENDPOINT }}
+          directory: src/
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
 
       - name: Run Tests
         run: |
