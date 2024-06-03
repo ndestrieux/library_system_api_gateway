@@ -3,8 +3,8 @@ from unittest.mock import patch
 import httpx
 import pytest
 
-from src.dependencies.gateway_routers import LibraryRouter
-from src.dependencies.graphql.request_body_builders import (
+from utils.gateway_routers import LibraryRouter
+from utils.graphql.request_body_builders import (
     AuthorMutationRequestBody,
     AuthorQueryRequestBody,
 )
@@ -23,7 +23,7 @@ class MockMutationRequestBody:
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.get",
+    "src.utils.gateway_routers.httpx.AsyncClient.get",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 @patch(
@@ -41,7 +41,7 @@ async def test_library_router_with_get_method(
 
 @pytest.mark.anyio
 @patch(
-    "src.dependencies.gateway_routers.httpx.AsyncClient.post",
+    "src.utils.gateway_routers.httpx.AsyncClient.post",
     return_value=httpx.Response(200, json={"data": "Some data", "errors": []}),
 )
 @patch(

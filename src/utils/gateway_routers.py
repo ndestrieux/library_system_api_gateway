@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from conf import get_settings
-from dependencies.graphql.request_body_builders import BaseRequestBody
+from utils.graphql.request_body_builders import BaseRequestBody
 
 
 class BaseRouter(ABC):
