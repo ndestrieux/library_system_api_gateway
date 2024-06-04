@@ -9,7 +9,7 @@ from datastructures.forum import (
     TopicQueryParams,
     TopicUpdateForm,
 )
-from params import auth_all
+from router_params import SUB_PATH, auth_all
 from utils.gateway_routers import ForumRouter
 from utils.general import get_user_id_from_token
 
@@ -23,7 +23,7 @@ async def topic_list(
 ):
     user_id = get_user_id_from_token(auth_result)
     topic_router = ForumRouter(
-        "/topics/",
+        SUB_PATH["topic"],
         "get",
         user_id,
         query_params=query_params.model_dump(exclude_none=True),
@@ -37,7 +37,7 @@ async def topic_details(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
     user_id = get_user_id_from_token(auth_result)
-    topic_router = ForumRouter(f"/topics/{user_id}/", "get", user_id)
+    topic_router = ForumRouter(f"{SUB_PATH["topic"]}{user_id}/", "get", user_id)
     response = await topic_router.send_request()
     return response.json()
 
@@ -48,7 +48,7 @@ async def create_topic(
 ):
     user_id = get_user_id_from_token(auth_result)
     topic_router = ForumRouter(
-        "/topics/", "post", user_id, body=form.model_dump(exclude_none=True)
+        SUB_PATH["topic"], "post", user_id, body=form.model_dump(exclude_none=True)
     )
     response = await topic_router.send_request()
     return response.json()
@@ -62,7 +62,10 @@ async def update_topic(
 ):
     user_id = get_user_id_from_token(auth_result)
     topic_router = ForumRouter(
-        f"/topics/{item_id}/", "patch", user_id, body=form.model_dump(exclude_none=True)
+        f"{SUB_PATH["topic"]}{item_id}/",
+        "patch",
+        user_id,
+        body=form.model_dump(exclude_none=True),
     )
     response = await topic_router.send_request()
     return response.json()
@@ -73,7 +76,7 @@ async def delete_topic(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
     user_id = get_user_id_from_token(auth_result)
-    topic_router = ForumRouter(f"/topics/{item_id}/", "delete", user_id)
+    topic_router = ForumRouter(f"{SUB_PATH["topic"]}{item_id}/", "delete", user_id)
     response = await topic_router.send_request()
     return response.json()
 
@@ -83,7 +86,7 @@ async def post_details(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
     user_id = get_user_id_from_token(auth_result)
-    forum_router = ForumRouter(f"/posts/{item_id}/", "get", user_id)
+    forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "get", user_id)
     response = await forum_router.send_request()
     return response.json()
 
@@ -94,7 +97,7 @@ async def create_post(
 ):
     user_id = get_user_id_from_token(auth_result)
     forum_router = ForumRouter(
-        "/posts/", "post", user_id, body=form.model_dump(exclude_none=True)
+        SUB_PATH["post"], "post", user_id, body=form.model_dump(exclude_none=True)
     )
     response = await forum_router.send_request()
     return response.json()
@@ -108,7 +111,10 @@ async def update_post(
 ):
     user_id = get_user_id_from_token(auth_result)
     forum_router = ForumRouter(
-        f"/posts/{item_id}/", "patch", user_id, body=form.model_dump(exclude_none=True)
+        f"{SUB_PATH["post"]}{item_id}/",
+        "patch",
+        user_id,
+        body=form.model_dump(exclude_none=True),
     )
     response = await forum_router.send_request()
     return response.json()
@@ -119,6 +125,6 @@ async def delete_post(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
     user_id = get_user_id_from_token(auth_result)
-    forum_router = ForumRouter(f"/posts/{item_id}/", "delete", user_id)
+    forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "delete", user_id)
     response = await forum_router.send_request()
     return response.json()

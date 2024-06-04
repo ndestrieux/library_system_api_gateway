@@ -3,7 +3,7 @@ from unittest.mock import patch
 import httpx
 from fastapi.testclient import TestClient
 
-from params import auth_all, auth_staff
+from router_params import auth_all, auth_staff
 from src.main import app
 
 
