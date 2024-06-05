@@ -1,0 +1,32 @@
+name: api-gateway
+services:
+  app:
+    build:
+      context: ../../
+      dockerfile: ./deployment/prod/Dockerfile
+    container_name: "api-gateway"
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    networks:
+      - frontend
+      - backend
+
+  nginx:
+    build: ./nginx
+    container_name: proxy
+    ports:
+      - 80:80
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - app
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true
