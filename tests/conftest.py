@@ -1,6 +1,7 @@
-from typing import Generator, Any, Dict
-from httpx import Response, AsyncClient, ASGITransport
+from typing import Any, Dict, Generator
+
 import pytest
+from httpx import ASGITransport, AsyncClient, Response
 
 from src.main import app
 from src.router_params import auth_all, auth_staff
@@ -118,13 +119,16 @@ def body_data_update_post():
         "topic": 1,
     }
 
+
 @pytest.fixture
 def mock_httpx_requests(response_data):
     class MockAsyncClient:
         @classmethod
         async def get(cls, *args, **kwargs):
             return Response(200, json=response_data)
+
     return MockAsyncClient
+
 
 @pytest.fixture(scope="session")
 def override_auth_verify(request) -> Generator[None, Any, None]:
@@ -137,6 +141,7 @@ def override_auth_verify(request) -> Generator[None, Any, None]:
     yield
     del app.dependency_overrides[auth_all.verify]
     del app.dependency_overrides[auth_staff.verify]
+
 
 @pytest.fixture
 def async_client() -> Generator[AsyncClient, None, None]:
