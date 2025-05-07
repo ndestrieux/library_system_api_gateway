@@ -1,4 +1,9 @@
+from typing import Generator, Any, Dict
+from httpx import Response, AsyncClient, ASGITransport
 import pytest
+
+from src.main import app
+from src.router_params import auth_all, auth_staff
 
 
 @pytest.fixture(scope="function")
@@ -112,3 +117,30 @@ def body_data_update_post():
         "content": "I was wondering...",
         "topic": 1,
     }
+
+@pytest.fixture
+def mock_httpx_requests(response_data):
+    class MockAsyncClient:
+        @classmethod
+        async def get(cls, *args, **kwargs):
+            return Response(200, json=response_data)
+    return MockAsyncClient
+
+@pytest.fixture(scope="session")
+def override_auth_verify(request) -> Generator[None, Any, None]:
+
+    def mock_verify() -> Generator[Dict[str, str], None, None]:
+        yield {"sub": "user1234"}
+
+    app.dependency_overrides[auth_all.verify] = mock_verify
+    app.dependency_overrides[auth_staff.verify] = mock_verify
+    yield
+    del app.dependency_overrides[auth_all.verify]
+    del app.dependency_overrides[auth_staff.verify]
+
+@pytest.fixture
+def async_client() -> Generator[AsyncClient, None, None]:
+    """Create a test async client."""
+    yield AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://localhost/api/forum"
+    )
