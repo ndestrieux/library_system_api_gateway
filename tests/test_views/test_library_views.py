@@ -32,10 +32,17 @@ def mock_library_query_builder():
         def mock_build_request_body(self):
             return MockBuilder().full_request
 
-        mp.setattr(
-            "src.routers.library.AuthorQueryRequestBody.full_request",
-            mock_build_request_body,
-        )
+        request_body_classes = [
+            "AuthorQueryRequestBody",
+            "AuthorMutationRequestBody",
+            "BookQueryRequestBody",
+            "BookMutationRequestBody",
+        ]
+        for request_body_class in request_body_classes:
+            mp.setattr(
+                f"src.routers.library.{request_body_class}.full_request",
+                mock_build_request_body,
+            )
 
 
 @pytest.mark.asyncio
