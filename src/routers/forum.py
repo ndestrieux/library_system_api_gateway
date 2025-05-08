@@ -29,7 +29,7 @@ async def topic_list(
         query_params=query_params.model_dump(exclude_none=True),
     )
     response = await topic_router.send_request()
-    return response.json()
+    return response
 
 
 @router.get("/topics/{item_id}/")
@@ -39,7 +39,7 @@ async def topic_details(
     user_id = get_user_id_from_token(auth_result)
     topic_router = ForumRouter(f"{SUB_PATH["topic"]}{user_id}/", "get", user_id)
     response = await topic_router.send_request()
-    return response.json()
+    return response
 
 
 @router.post("/topics/")
@@ -51,7 +51,7 @@ async def create_topic(
         SUB_PATH["topic"], "post", user_id, body=form.model_dump(exclude_none=True)
     )
     response = await topic_router.send_request()
-    return response.json()
+    return response
 
 
 @router.patch("/topics/{item_id}/")
@@ -68,7 +68,7 @@ async def update_topic(
         body=form.model_dump(exclude_none=True),
     )
     response = await topic_router.send_request()
-    return response.json()
+    return response
 
 
 @router.delete("/topics/{item_id}/")
@@ -78,7 +78,7 @@ async def delete_topic(
     user_id = get_user_id_from_token(auth_result)
     topic_router = ForumRouter(f"{SUB_PATH["topic"]}{item_id}/", "delete", user_id)
     response = await topic_router.send_request()
-    return response.json()
+    return response
 
 
 @router.get("/posts/{item_id}/")
@@ -88,7 +88,7 @@ async def post_details(
     user_id = get_user_id_from_token(auth_result)
     forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "get", user_id)
     response = await forum_router.send_request()
-    return response.json()
+    return response
 
 
 @router.post("/posts/")
@@ -100,7 +100,7 @@ async def create_post(
         SUB_PATH["post"], "post", user_id, body=form.model_dump(exclude_none=True)
     )
     response = await forum_router.send_request()
-    return response.json()
+    return response
 
 
 @router.patch("/posts/{item_id}/")
@@ -117,7 +117,7 @@ async def update_post(
         body=form.model_dump(exclude_none=True),
     )
     response = await forum_router.send_request()
-    return response.json()
+    return response
 
 
 @router.delete("/posts/{item_id}/")
@@ -127,4 +127,4 @@ async def delete_post(
     user_id = get_user_id_from_token(auth_result)
     forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "delete", user_id)
     response = await forum_router.send_request()
-    return response.json()
+    return response
