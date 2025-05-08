@@ -43,7 +43,7 @@ env = [
     "library_endpoint=test_library_endpoint",
     "forum_endpoint=test_forum_endpoint"
 ]
-log_cli = 1
+log_cli = true
 log_cli_level = "WARNING"
 log_cli_format = "%(asctime)s %(levelname)s %(message)s"
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
