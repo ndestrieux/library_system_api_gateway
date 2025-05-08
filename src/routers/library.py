@@ -34,7 +34,7 @@ async def author_list(
     request_data = {"operation_args": query_params.model_dump(exclude_none=True)}
     if form:
         request_data |= form.model_dump(include={"requested_fields"})
-    body_obj = AuthorQueryRequestBody(**request_data)
+    body_obj = AuthorQueryRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     author_router = LibraryRouter(SUB_PATH["author"], "get", user_id, body_obj)
     response = await author_router.send_request()
@@ -50,7 +50,7 @@ async def author_details(
     request_data = {"operation_args": {"id": item_id}}
     if form:
         request_data |= form.model_dump(include={"requested_fields"})
-    body_obj = AuthorQueryRequestBody(**request_data)
+    body_obj = AuthorQueryRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     author_router = LibraryRouter(
         f"{SUB_PATH["author"]}{item_id}/", "get", user_id, body_obj
@@ -69,7 +69,7 @@ async def create_author(
             exclude={"requested_fields"}, exclude_none=True
         ),
     } | form.model_dump(include={"requested_fields"})
-    body_obj = AuthorMutationRequestBody(**request_data)
+    body_obj = AuthorMutationRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     author_router = LibraryRouter(SUB_PATH["author"], "post", user_id, body_obj)
     response = await author_router.send_request()
@@ -87,7 +87,7 @@ async def update_author(
         "operation_args": {"id": item_id}
         | form.model_dump(exclude={"requested_fields"}, exclude_none=True),
     } | form.model_dump(include={"requested_fields"})
-    body_obj = AuthorMutationRequestBody(**request_data)
+    body_obj = AuthorMutationRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     author_router = LibraryRouter(
         f"{SUB_PATH["author"]}{item_id}/", "post", user_id, body_obj
@@ -104,7 +104,7 @@ async def delete_author(
         "mutation_operation_name": "deleteAuthor",
         "operation_args": {"id": item_id},
     }
-    body_obj = AuthorMutationRequestBody(**request_data)
+    body_obj = AuthorMutationRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     author_router = LibraryRouter(
         f"{SUB_PATH["author"]}{item_id}/", "post", user_id, body_obj
@@ -122,7 +122,7 @@ async def book_list(
     request_data = {"operation_args": query_params.model_dump(exclude_none=True)}
     if form:
         request_data |= form.model_dump(include={"requested_fields"})
-    body_obj = BookQueryRequestBody(**request_data)
+    body_obj = BookQueryRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     book_router = LibraryRouter(SUB_PATH["book"], "get", user_id, body_obj)
     response = await book_router.send_request()
@@ -138,7 +138,7 @@ async def book_details(
     request_data = {"operation_args": {"id": item_id}}
     if form:
         request_data |= form.model_dump(include={"requested_fields"})
-    body_obj = BookQueryRequestBody(**request_data)
+    body_obj = BookQueryRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     book_router = LibraryRouter(
         f"{SUB_PATH["book"]}{item_id}/", "get", user_id, body_obj
@@ -157,7 +157,7 @@ async def create_book(
             exclude={"requested_fields"}, exclude_none=True
         ),
     } | form.model_dump(include={"requested_fields"})
-    body_obj = BookMutationRequestBody(**request_data)
+    body_obj = BookMutationRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     book_router = LibraryRouter(SUB_PATH["book"], "post", user_id, body_obj)
     response = await book_router.send_request()
@@ -175,7 +175,7 @@ async def update_book(
         "operation_args": {"id": item_id}
         | form.model_dump(exclude={"requested_fields"}, exclude_none=True),
     } | form.model_dump(include={"requested_fields"})
-    body_obj = AuthorMutationRequestBody(**request_data)
+    body_obj = AuthorMutationRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     book_router = LibraryRouter(
         f"{SUB_PATH["book"]}{item_id}/", "post", user_id, body_obj
@@ -192,7 +192,7 @@ async def delete_book(
         "mutation_operation_name": "deleteBook",
         "operation_args": {"id": item_id},
     }
-    body_obj = BookMutationRequestBody(**request_data)
+    body_obj = BookMutationRequestBody(**request_data).full_request
     user_id = get_user_id_from_token(auth_result)
     book_router = LibraryRouter(
         f"{SUB_PATH["book"]}{item_id}/", "post", user_id, body_obj

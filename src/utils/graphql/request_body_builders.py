@@ -77,7 +77,9 @@ class QueryRequestBody(BaseRequestBody, ABC):
 
     REQUEST_TYPE = "query"
 
-    def __str__(self):
+    @property
+    def full_request(self) -> str:
+        """Returns the full request string."""
         return f"{self.REQUEST_TYPE} {self._build_request()}"
 
 
