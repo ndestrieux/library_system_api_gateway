@@ -1,10 +1,11 @@
+import json
 from typing import Any, Dict, Generator
 
 import pytest
 from httpx import ASGITransport, AsyncClient, Response
 
 from src.main import app
-from src.router_params import auth_all, auth_staff
+from src.routers.library import auth_all, auth_staff
 
 
 @pytest.fixture(scope="function")
@@ -25,10 +26,10 @@ def book_data():
     }
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def response_data():
     """Generate response data."""
-    return {"data": "Some data", "errors": []}
+    return json.dumps({"data": "Some data", "errors": []})
 
 
 @pytest.fixture(scope="function")
@@ -130,8 +131,11 @@ def mock_httpx_requests(response_data):
     return MockAsyncClient
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session", autouse=True)
 def override_auth_verify(request) -> Generator[None, Any, None]:
+    """
+    Overrides the authentication verification dependencies for testing purposes.
+    """
 
     def mock_verify() -> Generator[Dict[str, str], None, None]:
         yield {"sub": "user1234"}
@@ -143,9 +147,7 @@ def override_auth_verify(request) -> Generator[None, Any, None]:
     del app.dependency_overrides[auth_staff.verify]
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def async_client() -> Generator[AsyncClient, None, None]:
     """Create a test async client."""
-    yield AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://localhost/api/forum"
-    )
+    yield AsyncClient(transport=ASGITransport(app=app), base_url="http://test/")
