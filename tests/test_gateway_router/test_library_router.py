@@ -20,16 +20,15 @@ class TestLibraryRouter:
         self,
         author_data_obj,
         response_data,
+        user_info,
     ):
-        router = LibraryRouter("/authors/", "get", "user_1234", author_data_obj)
+        router = LibraryRouter("/authors/", "get", user_info, author_data_obj)
         response = await router.send_request()
         assert response.json() == response_data
 
     async def test_library_router_with_post_method(
-        self, body_data_create_author, response_data
+        self, body_data_create_author, response_data, user_info
     ):
-        router = LibraryRouter(
-            "/authors/", "post", "user_1234", body_data_create_author
-        )
+        router = LibraryRouter("/authors/", "post", user_info, body_data_create_author)
         response = await router.send_request()
         assert response.json() == response_data
