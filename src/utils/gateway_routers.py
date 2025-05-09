@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
 import httpx
+from fastapi import Response
 
 from conf import get_settings
 from utils.graphql.request_body_builders import BaseRequestBody
@@ -37,10 +38,10 @@ class BaseRouter(ABC):
             "data": self._get_body(),
         }
 
-    async def send_request(self):
+    async def send_request(self) -> Response:
         """Route request to specified microservice."""
         async with httpx.AsyncClient() as client:
-            response = await client.__getattribute__(self.request_method)(
+            response = await getattr(client, self.request_method)(
                 **self._build_request()
             )
         return response

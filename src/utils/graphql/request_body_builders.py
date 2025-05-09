@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Dict, List, Optional
 
 
@@ -71,13 +71,19 @@ class BaseRequestBody(ABC):
             {self.OBJ_NAME: self.requested_fields}, self.operation_args
         )
 
+    @property
+    @abstractmethod
+    def full_request(self) -> str:
+        """Returns the full request string."""
+
 
 class QueryRequestBody(BaseRequestBody, ABC):
     """Abstract class for building GraphQL requests for query types."""
 
     REQUEST_TYPE = "query"
 
-    def __str__(self):
+    @property
+    def full_request(self) -> str:
         return f"{self.REQUEST_TYPE} {self._build_request()}"
 
 
@@ -98,7 +104,8 @@ class MutationRequestBody(BaseRequestBody, ABC):
         )
         self.mutation_operation_name = mutation_operation_name
 
-    def __str__(self):
+    @property
+    def full_request(self):
         return f"{self.REQUEST_TYPE} {self.mutation_operation_name} {self._build_request()}"
 
 

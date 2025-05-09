@@ -46,7 +46,7 @@ class VerifyToken:
         except Exception as error:
             raise UnauthorizedException(str(error))
         if not (
-            set(payload[f"{self.config.auth0_api_audience}roles"])
+            set(payload.get(f"{self.config.auth0_api_audience}roles", []))
             & set(self.authorized_user_roles)
         ):
             raise UnauthorizedException(
