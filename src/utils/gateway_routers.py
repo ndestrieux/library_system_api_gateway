@@ -5,6 +5,7 @@ import httpx
 from fastapi import Response
 
 from conf import get_settings
+from utils.general import UserInfo
 from utils.graphql.request_body_builders import BaseRequestBody
 
 
@@ -13,10 +14,10 @@ class BaseRouter(ABC):
 
     BASE_URL: str = None
 
-    def __init__(self, path: str, request_method: str, user_id: str):
+    def __init__(self, path: str, request_method: str, user_info: UserInfo):
         self.path = path
         self.request_method = request_method
-        self.user_id = user_id
+        self.user_info = user_info
 
     @property
     def full_path(self) -> str:
@@ -24,7 +25,8 @@ class BaseRouter(ABC):
 
     def _get_headers(self) -> Dict[str, str]:
         """Retrieve headers"""
-        return {"requester": self.user_id}
+        token = self.user_info.to_jwt()
+        return {"authentication": f"Bearer {token}"}
 
     @abstractmethod
     def _get_body(self) -> Dict[str, str | int]:

@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     library_endpoint: str
     forum_endpoint: str
 
+    jwt_secret: str
+    jwt_algorithm: str
+
 
 @lru_cache()
 def get_settings():

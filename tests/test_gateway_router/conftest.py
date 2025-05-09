@@ -3,6 +3,8 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from httpx import Response
 
+from utils.general import UserInfo
+
 
 @pytest.fixture(scope="module", autouse=True)
 def mock_httpx_client(response_data):
@@ -23,3 +25,9 @@ def mock_httpx_client(response_data):
             return_value=Response(200, json=response_data)
         )
         yield mock_client_instance
+
+
+@pytest.fixture(scope="module")
+def user_info():
+    """Fixture to mock user info."""
+    return UserInfo(id="user_1234", groups=["group1", "group2"])

@@ -11,7 +11,7 @@ from datastructures.forum import (
 )
 from router_params import SUB_PATH, auth_all
 from utils.gateway_routers import ForumRouter
-from utils.general import get_user_id_from_token
+from utils.general import get_user_info_from_token
 
 router = APIRouter(prefix="/api/forum", tags=["forum"])
 
@@ -21,11 +21,11 @@ async def topic_list(
     query_params: TopicQueryParams = Depends(),
     auth_result: Dict[str, Any] = Security(auth_all.verify),
 ):
-    user_id = get_user_id_from_token(auth_result)
+    user_info = get_user_info_from_token(auth_result)
     topic_router = ForumRouter(
         SUB_PATH["topic"],
         "get",
-        user_id,
+        user_info,
         query_params=query_params.model_dump(exclude_none=True),
     )
     response = await topic_router.send_request()
@@ -36,8 +36,8 @@ async def topic_list(
 async def topic_details(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
-    user_id = get_user_id_from_token(auth_result)
-    topic_router = ForumRouter(f"{SUB_PATH["topic"]}{user_id}/", "get", user_id)
+    user_info = get_user_info_from_token(auth_result)
+    topic_router = ForumRouter(f"{SUB_PATH["topic"]}{user_info}/", "get", user_info)
     response = await topic_router.send_request()
     return response
 
@@ -46,9 +46,9 @@ async def topic_details(
 async def create_topic(
     form: TopicCreateForm, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
-    user_id = get_user_id_from_token(auth_result)
+    user_info = get_user_info_from_token(auth_result)
     topic_router = ForumRouter(
-        SUB_PATH["topic"], "post", user_id, body=form.model_dump(exclude_none=True)
+        SUB_PATH["topic"], "post", user_info, body=form.model_dump(exclude_none=True)
     )
     response = await topic_router.send_request()
     return response
@@ -60,11 +60,11 @@ async def update_topic(
     form: TopicUpdateForm,
     auth_result: Dict[str, Any] = Security(auth_all.verify),
 ):
-    user_id = get_user_id_from_token(auth_result)
+    user_info = get_user_info_from_token(auth_result)
     topic_router = ForumRouter(
         f"{SUB_PATH["topic"]}{item_id}/",
         "patch",
-        user_id,
+        user_info,
         body=form.model_dump(exclude_none=True),
     )
     response = await topic_router.send_request()
@@ -75,8 +75,8 @@ async def update_topic(
 async def delete_topic(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
-    user_id = get_user_id_from_token(auth_result)
-    topic_router = ForumRouter(f"{SUB_PATH["topic"]}{item_id}/", "delete", user_id)
+    user_info = get_user_info_from_token(auth_result)
+    topic_router = ForumRouter(f"{SUB_PATH["topic"]}{item_id}/", "delete", user_info)
     response = await topic_router.send_request()
     return response
 
@@ -85,8 +85,8 @@ async def delete_topic(
 async def post_details(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
-    user_id = get_user_id_from_token(auth_result)
-    forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "get", user_id)
+    user_info = get_user_info_from_token(auth_result)
+    forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "get", user_info)
     response = await forum_router.send_request()
     return response
 
@@ -95,9 +95,9 @@ async def post_details(
 async def create_post(
     form: PostCreateForm, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
-    user_id = get_user_id_from_token(auth_result)
+    user_info = get_user_info_from_token(auth_result)
     forum_router = ForumRouter(
-        SUB_PATH["post"], "post", user_id, body=form.model_dump(exclude_none=True)
+        SUB_PATH["post"], "post", user_info, body=form.model_dump(exclude_none=True)
     )
     response = await forum_router.send_request()
     return response
@@ -109,11 +109,11 @@ async def update_post(
     form: PostUpdateForm,
     auth_result: Dict[str, Any] = Security(auth_all.verify),
 ):
-    user_id = get_user_id_from_token(auth_result)
+    user_info = get_user_info_from_token(auth_result)
     forum_router = ForumRouter(
         f"{SUB_PATH["post"]}{item_id}/",
         "patch",
-        user_id,
+        user_info,
         body=form.model_dump(exclude_none=True),
     )
     response = await forum_router.send_request()
@@ -124,7 +124,7 @@ async def update_post(
 async def delete_post(
     item_id: int, auth_result: Dict[str, Any] = Security(auth_all.verify)
 ):
-    user_id = get_user_id_from_token(auth_result)
-    forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "delete", user_id)
+    user_info = get_user_info_from_token(auth_result)
+    forum_router = ForumRouter(f"{SUB_PATH["post"]}{item_id}/", "delete", user_info)
     response = await forum_router.send_request()
     return response

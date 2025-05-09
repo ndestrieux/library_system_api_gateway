@@ -41,7 +41,9 @@ env = [
     "auth0_issuer=test_issuer",
     "auth0_algorithms=test_algorithms",
     "library_endpoint=test_library_endpoint",
-    "forum_endpoint=test_forum_endpoint"
+    "forum_endpoint=test_forum_endpoint",
+    "jwt_secret=test_jwt_secret",
+    "jwt_algorithm=HS256",
 ]
 log_cli = true
 log_cli_level = "WARNING"
