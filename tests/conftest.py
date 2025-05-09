@@ -84,22 +84,6 @@ def body_data_update_book():
     return {"category": "Epic"}
 
 
-@pytest.fixture(scope="function")
-def body_data_create_post():
-    return {
-        "content": "I have a question...",
-        "topic": 1,
-    }
-
-
-@pytest.fixture(scope="function")
-def body_data_update_post():
-    return {
-        "content": "I was wondering...",
-        "topic": 1,
-    }
-
-
 @pytest.fixture(scope="session", autouse=True)
 def override_auth_verify(request) -> Generator[None, Any, None]:
     """

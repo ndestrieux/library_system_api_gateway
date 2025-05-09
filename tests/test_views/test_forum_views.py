@@ -20,6 +20,11 @@ def mock_forum_router(response_data):
 
 @pytest.mark.asyncio
 class TestForumList:
+    @pytest.fixture(scope="class")
+    def topic_params(self):
+        """Generate topic params."""
+        return {"category": "XIXth century"}
+
     async def test_list_topic_view(self, response_data, async_client):
         response = await async_client.get("/api/forum/topics/")
         assert response.status_code == 200
@@ -43,6 +48,13 @@ class TestForumDetail:
 
 @pytest.mark.asyncio
 class TestForumCreate:
+    @pytest.fixture(scope="class")
+    def body_data_create_topic(self):
+        return {
+            "title": "Star Wars book recommendation",
+            "category": "Recommendation",
+        }
+
     async def test_create_topic_view(
         self, response_data, body_data_create_topic, async_client
     ):
@@ -56,6 +68,13 @@ class TestForumCreate:
 
 @pytest.mark.asyncio
 class TestForumUpdate:
+    @pytest.fixture(scope="class")
+    def body_data_update_topic(self):
+        """Generate body data for topic update."""
+        return {
+            "category": "Science Fiction",
+        }
+
     async def test_update_topic_view(
         self, response_data, body_data_update_topic, async_client
     ):
@@ -84,6 +103,13 @@ class TestForumPostDetail:
 
 @pytest.mark.asyncio
 class TestForumPostCreate:
+    @pytest.fixture(scope="class")
+    def body_data_create_post(self):
+        return {
+            "content": "I have a question...",
+            "topic": 1,
+        }
+
     async def test_create_post_view(
         self, response_data, body_data_create_post, async_client
     ):
@@ -97,6 +123,13 @@ class TestForumPostCreate:
 
 @pytest.mark.asyncio
 class TestForumPostUpdate:
+    @pytest.fixture(scope="class")
+    def body_data_update_post(self):
+        return {
+            "content": "I was wondering...",
+            "topic": 1,
+        }
+
     async def test_update_post_view(
         self, response_data, body_data_update_post, async_client
     ):
