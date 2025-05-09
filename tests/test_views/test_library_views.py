@@ -45,6 +45,30 @@ def mock_library_query_builder():
             )
 
 
+@pytest.fixture(scope="module")
+def author_requested_fields():
+    """Generate requested_fields data for authors."""
+    return {"requested_fields": ["first_name", "last_name"]}
+
+
+@pytest.fixture(scope="module")
+def author_params():
+    """Generate author params."""
+    return {"first_name": "John"}
+
+
+@pytest.fixture(scope="module")
+def book_requested_fields():
+    """Generate requested_fields data for books."""
+    return {"requested_fields": ["title", "publication_year"]}
+
+
+@pytest.fixture(scope="module")
+def book_params():
+    """Generate book params."""
+    return {"publication_year": 1999}
+
+
 @pytest.mark.asyncio
 class TestAuthorList:
     async def test_list_author_view(self, response_data, async_client):
@@ -97,6 +121,11 @@ class TestAuthorDetail:
 
 @pytest.mark.asyncio
 class TestAuthorCreate:
+    @pytest.fixture(scope="class")
+    def body_data_create_author(self):
+        """Generate body data for author creation."""
+        return {"first_name": "Dale", "last_name": "Cooper"}
+
     async def test_create_author_view(
         self, response_data, body_data_create_author, async_client
     ):
@@ -123,6 +152,11 @@ class TestAuthorCreate:
 
 @pytest.mark.asyncio
 class TestAuthorUpdate:
+    @pytest.fixture(scope="class")
+    def body_data_update_author(self):
+        """Generate body data for author update."""
+        return {"last_name": "Cooper"}
+
     async def test_update_author_view(
         self, response_data, body_data_update_author, async_client
     ):
@@ -219,6 +253,16 @@ class TestBookDetail:
 
 @pytest.mark.asyncio
 class TestBookCreate:
+    @pytest.fixture(scope="class")
+    def body_data_create_book(self):
+        return {
+            "title": "The Hobbit",
+            "authors": [1],
+            "publication_year": 1937,
+            "language": "EN",
+            "category": "Fantasy",
+        }
+
     async def test_create_book_view(
         self, response_data, body_data_create_book, async_client
     ):
@@ -245,6 +289,12 @@ class TestBookCreate:
 
 @pytest.mark.asyncio
 class TestBookUpdate:
+    @pytest.fixture(scope="class")
+    def body_data_update_book(self):
+        return {
+            "category": "Epic",
+        }
+
     async def test_update_book_view(
         self, response_data, body_data_update_book, async_client
     ):
