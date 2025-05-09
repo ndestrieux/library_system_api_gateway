@@ -2,7 +2,7 @@ import json
 from typing import Any, Dict, Generator
 
 import pytest
-from httpx import ASGITransport, AsyncClient, Response
+from httpx import ASGITransport, AsyncClient
 
 from src.main import app
 from src.routers.library import auth_all, auth_staff
@@ -85,27 +85,6 @@ def body_data_update_book():
 
 
 @pytest.fixture(scope="function")
-def body_data_create_topic():
-    return {
-        "title": "Star Wars book recommendation",
-        "category": "Recommendation",
-    }
-
-
-@pytest.fixture(scope="function")
-def body_data_update_topic():
-    return {
-        "category": "Science Fiction",
-    }
-
-
-@pytest.fixture(scope="function")
-def topic_params():
-    """Generate topic params."""
-    return {"category": "XIXth century"}
-
-
-@pytest.fixture(scope="function")
 def body_data_create_post():
     return {
         "content": "I have a question...",
@@ -119,16 +98,6 @@ def body_data_update_post():
         "content": "I was wondering...",
         "topic": 1,
     }
-
-
-@pytest.fixture
-def mock_httpx_requests(response_data):
-    class MockAsyncClient:
-        @classmethod
-        async def get(cls, *args, **kwargs):
-            return Response(200, json=response_data)
-
-    return MockAsyncClient
 
 
 @pytest.fixture(scope="session", autouse=True)
